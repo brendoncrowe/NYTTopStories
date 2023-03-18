@@ -15,5 +15,4 @@ class SavedArticlesViewController: UIViewController {
         view.backgroundColor = .systemOrange
         
     }
-
 }
