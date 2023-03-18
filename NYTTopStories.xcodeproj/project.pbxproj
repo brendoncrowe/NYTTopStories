@@ -13,6 +13,9 @@
 		404E6EFE29C6222F00428FDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 404E6EFC29C6222F00428FDC /* LaunchScreen.storyboard */; };
 		404E6F0E29C6227000428FDC /* NYTTopStoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F0D29C6227000428FDC /* NYTTopStoriesTests.swift */; };
 		404E6F1629C6230A00428FDC /* TopStoriesTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F1529C6230A00428FDC /* TopStoriesTabController.swift */; };
+		404E6F1929C624BA00428FDC /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F1829C624BA00428FDC /* NewsFeedViewController.swift */; };
+		404E6F1B29C624D800428FDC /* SavedArticlesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F1A29C624D800428FDC /* SavedArticlesViewController.swift */; };
+		404E6F1D29C624E900428FDC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F1C29C624E900428FDC /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,9 @@
 		404E6F0B29C6227000428FDC /* NYTTopStoriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NYTTopStoriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		404E6F0D29C6227000428FDC /* NYTTopStoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NYTTopStoriesTests.swift; sourceTree = "<group>"; };
 		404E6F1529C6230A00428FDC /* TopStoriesTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesTabController.swift; sourceTree = "<group>"; };
+		404E6F1829C624BA00428FDC /* NewsFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedViewController.swift; sourceTree = "<group>"; };
+		404E6F1A29C624D800428FDC /* SavedArticlesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArticlesViewController.swift; sourceTree = "<group>"; };
+		404E6F1C29C624E900428FDC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				404E6F1529C6230A00428FDC /* TopStoriesTabController.swift */,
+				404E6F1829C624BA00428FDC /* NewsFeedViewController.swift */,
+				404E6F1A29C624D800428FDC /* SavedArticlesViewController.swift */,
+				404E6F1C29C624E900428FDC /* SettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -210,9 +219,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				404E6F1929C624BA00428FDC /* NewsFeedViewController.swift in Sources */,
 				404E6EF229C6222E00428FDC /* AppDelegate.swift in Sources */,
 				404E6F1629C6230A00428FDC /* TopStoriesTabController.swift in Sources */,
+				404E6F1B29C624D800428FDC /* SavedArticlesViewController.swift in Sources */,
 				404E6EF429C6222E00428FDC /* SceneDelegate.swift in Sources */,
+				404E6F1D29C624E900428FDC /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
