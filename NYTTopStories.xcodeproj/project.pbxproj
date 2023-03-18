@@ -98,7 +98,6 @@
 				404E6F1729C6238E00428FDC /* Controllers */,
 				404E6F1429C622EB00428FDC /* Supporting */,
 				404E6EFF29C6222F00428FDC /* Info.plist */,
-				404E6F2A29C64C2100428FDC /* Config.swift */,
 			);
 			path = NYTTopStories;
 			sourceTree = "<group>";
@@ -114,6 +113,7 @@
 		404E6F1429C622EB00428FDC /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				404E6F2A29C64C2100428FDC /* Config.swift */,
 				404E6EF129C6222E00428FDC /* AppDelegate.swift */,
 				404E6EF329C6222E00428FDC /* SceneDelegate.swift */,
 				404E6EFA29C6222F00428FDC /* Assets.xcassets */,

@@ -9,15 +9,14 @@ import Foundation
 import NetworkHelper
 
 
-struct NetworkAPIClient {
+struct NYYTopStoriesAPIClient {
     
-    static func fetchItems(for section: String, completion: @escaping (Result<[Article], AppError>) -> ()) {
+     static func fetchItems(for section: String, completion: @escaping (Result<[Article], AppError>) -> ()) {
         let endpoint = "https://api.nytimes.com/svc/topstories/v2/us.json?api-key=\(AppKeys.apiKey)"
         guard let url = URL(string: endpoint) else {
             completion(.failure(.badURL(endpoint)))
             return
         }
-        
         let request = URLRequest(url: url)
         NetworkHelper.shared.performDataTask(with: request) { result in
             switch result {

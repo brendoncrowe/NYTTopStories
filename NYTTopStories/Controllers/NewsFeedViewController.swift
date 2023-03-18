@@ -10,6 +10,13 @@ import UIKit
 class NewsFeedViewController: UIViewController {
     
     private let newsFeedView = NewsFeedView()
+    private var articles = [Article]() {
+        didSet {
+            for article in articles {
+                print("Article Title: \(article.title)")
+            }
+        }
+    }
     
     override func loadView() {
         view = newsFeedView
@@ -20,7 +27,21 @@ class NewsFeedViewController: UIViewController {
         view.backgroundColor = .systemBackground
         newsFeedView.collectionView.dataSource = self
         newsFeedView.collectionView.delegate = self
+        fetchArticles()
         newsFeedView.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "articleCell")
+    }
+    
+    private func fetchArticles(for section: String = "technology") {
+        NYYTopStoriesAPIClient.fetchItems(for: section) { [weak self] result in
+            switch result {
+            case .failure(let appError):
+                print("error getting article \(appError)")
+            case .success(let articles):
+                DispatchQueue.main.async {
+                    self?.articles = articles
+                }
+            }
+        }
     }
 }
 
