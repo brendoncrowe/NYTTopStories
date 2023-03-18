@@ -20,6 +20,7 @@
 		404E6F2329C6318400428FDC /* NewsArticleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F2229C6318400428FDC /* NewsArticleModel.swift */; };
 		404E6F2529C6464900428FDC /* NYTTopStoriesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F2429C6464900428FDC /* NYTTopStoriesAPIClient.swift */; };
 		404E6F2929C6467A00428FDC /* ImageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 404E6F2829C6467A00428FDC /* ImageKit */; };
+		404E6F2B29C64C2100428FDC /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404E6F2A29C64C2100428FDC /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		404E6F1F29C6295800428FDC /* NewsFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedView.swift; sourceTree = "<group>"; };
 		404E6F2229C6318400428FDC /* NewsArticleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticleModel.swift; sourceTree = "<group>"; };
 		404E6F2429C6464900428FDC /* NYTTopStoriesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NYTTopStoriesAPIClient.swift; sourceTree = "<group>"; };
+		404E6F2A29C64C2100428FDC /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				404E6F1729C6238E00428FDC /* Controllers */,
 				404E6F1429C622EB00428FDC /* Supporting */,
 				404E6EFF29C6222F00428FDC /* Info.plist */,
+				404E6F2A29C64C2100428FDC /* Config.swift */,
 			);
 			path = NYTTopStories;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				404E6F1B29C624D800428FDC /* SavedArticlesViewController.swift in Sources */,
 				404E6F2529C6464900428FDC /* NYTTopStoriesAPIClient.swift in Sources */,
 				404E6F2029C6295800428FDC /* NewsFeedView.swift in Sources */,
+				404E6F2B29C64C2100428FDC /* Config.swift in Sources */,
 				404E6EF429C6222E00428FDC /* SceneDelegate.swift in Sources */,
 				404E6F1D29C624E900428FDC /* SettingsViewController.swift in Sources */,
 			);
