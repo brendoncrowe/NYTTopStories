@@ -23,7 +23,7 @@ struct Article: Decodable {
     let section: String
     let title: String
     let abstract: String
-    let url: URL
+    let url: String
     let publishedDate: String
     let byline: String
     let multimedia: [Multimedia]
@@ -40,7 +40,7 @@ struct Article: Decodable {
 }
 
 struct Multimedia: Decodable {
-    let url: URL
+    let url: String
     let format: String
     let height: Double
     let width: Double

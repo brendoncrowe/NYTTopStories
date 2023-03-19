@@ -13,7 +13,7 @@ class NewsFeedView: UIView {
         let sb = UISearchBar()
         sb.translatesAutoresizingMaskIntoConstraints = false
         sb.autocapitalizationType = .none
-        sb.placeholder = "search for article"
+        sb.placeholder = "search for news article"
         return sb
     }()
     
@@ -22,6 +22,7 @@ class NewsFeedView: UIView {
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = .systemGroupedBackground
         return cv
     }()
     
