@@ -37,6 +37,15 @@ class ArticleCell: UICollectionViewCell {
         return label
     }()
     
+    public lazy var byLineLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.font = UIFont.preferredFont(forTextStyle: .footnote)
+        label.text = "Buy Line"
+        return label
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,11 +61,18 @@ class ArticleCell: UICollectionViewCell {
         setImageViewConstraints()
         setArticleTitleConstraints()
         setAbstractHeadlineConstraints()
+        setByLineLabelConstraints()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        articleImageView.layer.cornerRadius = 4
     }
     
     public func configCell(with article: Article) {
         articleTitle.text = article.title
         abstractHeadline.text = article.abstract
+        byLineLabel.text = article.byline
         articleImageView.getImage(with: article.multimedia.first!.url) { [weak self] result in
             switch result {
             case .failure:
@@ -77,7 +93,7 @@ class ArticleCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             articleImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             articleImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            articleImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3),
+            articleImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4),
             articleImageView.widthAnchor.constraint(equalTo: articleImageView.heightAnchor)
         ])
     }
@@ -85,9 +101,9 @@ class ArticleCell: UICollectionViewCell {
     private func setArticleTitleConstraints() {
         addSubview(articleTitle)
         NSLayoutConstraint.activate( [
-            articleTitle.topAnchor.constraint(equalTo: articleImageView.topAnchor, constant: 8),
-            articleTitle.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 16),
-            articleTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            articleTitle.topAnchor.constraint(equalTo: articleImageView.topAnchor),
+            articleTitle.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 12),
+            articleTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
@@ -95,8 +111,16 @@ class ArticleCell: UICollectionViewCell {
         addSubview(abstractHeadline)
         NSLayoutConstraint.activate([
             abstractHeadline.topAnchor.constraint(equalTo: articleTitle.bottomAnchor, constant: 8),
-            abstractHeadline.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 16),
-            abstractHeadline.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            abstractHeadline.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 12),
+            abstractHeadline.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        ])
+    }
+    
+    private func setByLineLabelConstraints() {
+        addSubview(byLineLabel)
+        NSLayoutConstraint.activate([
+            byLineLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            byLineLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
         ])
     }
 }

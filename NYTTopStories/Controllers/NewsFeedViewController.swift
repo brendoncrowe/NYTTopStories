@@ -15,9 +15,6 @@ class NewsFeedViewController: UIViewController {
             DispatchQueue.main.async {
                 self.newsFeedView.collectionView.reloadData()
             }
-            for article in articles {
-                print("Article Title: \(article.title)")
-            }
         }
     }
     
@@ -28,19 +25,23 @@ class NewsFeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        fetchArticles()
+        configureVC()
+    }
+    
+    private func configureVC() {
         newsFeedView.collectionView.dataSource = self
         newsFeedView.collectionView.delegate = self
-        fetchArticles()
         newsFeedView.collectionView.register(ArticleCell.self, forCellWithReuseIdentifier: "articleCell")
     }
     
     private func fetchArticles(for section: String = "technology") {
-        NYYTopStoriesAPIClient.fetchItems(for: section) { result in
+        NYYTopStoriesAPIClient.fetchItems(for: section) { [weak self] result in
             switch result {
             case .failure(let appError):
                 print("error getting article \(appError)")
             case .success(let articles):
-                self.articles = articles
+                self?.articles = articles
             }
         }
     }
