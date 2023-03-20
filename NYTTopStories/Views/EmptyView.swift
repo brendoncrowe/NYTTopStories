@@ -33,7 +33,7 @@ class EmptyView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.alpha = 0.5
-        label.text = "You do not have any saved articles"
+        label.text = "you do not have any saved articles"
         label.numberOfLines = 4
         label.textAlignment = .center
         
