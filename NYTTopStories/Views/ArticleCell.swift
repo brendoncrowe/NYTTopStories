@@ -14,7 +14,6 @@ class ArticleCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
         imageView.image = UIImage(systemName: "photo")
         return imageView
     }()
@@ -42,7 +41,7 @@ class ArticleCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
-        label.text = "Buy Line"
+        label.text = "By Line"
         return label
     }()
     
