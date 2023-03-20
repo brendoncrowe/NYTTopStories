@@ -87,6 +87,8 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
         viewController.dataPersistence = dataPersistence
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    
 }
 
 extension NewsFeedViewController: UISearchResultsUpdating {

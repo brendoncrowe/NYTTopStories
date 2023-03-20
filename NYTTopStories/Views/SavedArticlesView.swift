@@ -1,36 +1,25 @@
 //
-//  NewsFeedView.swift
+//  SavedArticlesView.swift
 //  NYTTopStories
 //
-//  Created by Brendon Crowe on 3/18/23.
+//  Created by Brendon Crowe on 3/20/23.
 //
 
 import UIKit
 
-class NewsFeedView: UIView {
-    
-    
-    public lazy var searchController: UISearchController = {
-        let sc = UISearchController()
-        sc.loadViewIfNeeded()
-        sc.obscuresBackgroundDuringPresentation = false
-        sc.searchBar.placeholder = "search articles"
-        sc.searchBar.scopeButtonTitles = ["technology", "finance", "country"]
-        sc.searchBar.selectedScopeButtonIndex = 0
-        sc.searchBar.enablesReturnKeyAutomatically = false
-        sc.searchBar.returnKeyType = UIReturnKeyType.default
-        return sc
-    }()
+class SavedArticlesView: UIView {
     
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: 100, height: 100)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .systemGroupedBackground
+        cv.backgroundColor = .systemRed
         return cv
     }()
     
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -42,10 +31,12 @@ class NewsFeedView: UIView {
     }
     
     private func commonInit() {
-        setCollectionViewConstraints()
+        setCollectionViewLayoutConstraints()
     }
     
-    private func setCollectionViewConstraints() {
+    
+    
+    private func setCollectionViewLayoutConstraints() {
         addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
