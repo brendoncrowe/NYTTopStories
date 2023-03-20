@@ -34,6 +34,10 @@ class NewsFeedViewController: UIViewController {
         newsFeedView.collectionView.dataSource = self
         newsFeedView.collectionView.delegate = self
         newsFeedView.collectionView.register(ArticleCell.self, forCellWithReuseIdentifier: "articleCell")
+        navigationItem.searchController = newsFeedView.searchController
+        navigationItem.searchController?.searchBar.delegate = self
+        navigationItem.searchController?.searchResultsUpdater = self
+        navigationItem.searchController?.searchBar.selectedScopeButtonIndex = 0
     }
     
     private func fetchArticles(for section: String = "technology") {
@@ -80,4 +84,25 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
         viewController.article = article
         navigationController?.pushViewController(viewController, animated: true)
     }
+}
+
+extension NewsFeedViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    
+}
+
+extension NewsFeedViewController: UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        newsFeedView.searchController.searchBar.showsScopeBar = true
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        newsFeedView.searchController.searchBar.showsScopeBar = false
+        return true
+    }
+    
 }

@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import DataPersistence
 
 class TopStoriesTabController: UITabBarController {
+    
+    private var dataPersistence = DataPersistence<Article>(filename: "savedArticles.plist")
     
     private lazy var newsFeedVC: NewsFeedViewController = {
         let viewController = NewsFeedViewController()

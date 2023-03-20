@@ -18,7 +18,6 @@ class ArticleDetailView: UIView {
         return imageView
     }()
     
-    
     public lazy var abstractHeadline: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -61,6 +60,23 @@ class ArticleDetailView: UIView {
         setAbstractHeadlineConstraints()
     }
     
+    public func configureView(for article: Article?) {
+        guard let article = article else {
+            fatalError("did not load article")
+        }
+        abstractHeadline.text = article.abstract
+        articleImageView.getImage(with: article.getArticleImageArticle(for: .superJumbo)) { [weak self] result in
+            switch result {
+            case .failure:
+                break
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.articleImageView.image = image
+                }
+            }
+        }
+    }
+    
     private func setImageViewConstraints() {
         addSubview(articleImageView)
         NSLayoutConstraint.activate([
@@ -83,7 +99,7 @@ class ArticleDetailView: UIView {
     private func setByLineLabelConstraints() {
         addSubview(byLineLabel)
         NSLayoutConstraint.activate([
-          
+          // TODO:
         ])
     }
 }

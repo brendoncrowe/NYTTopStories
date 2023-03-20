@@ -7,12 +7,14 @@
 
 import Foundation
 
+private typealias Writeable = Codable & Equatable
+
 enum ImageFormat: String {
     case superJumbo = "Super Jumbo"
     case thumbLarge = "Large Thumbnail"
 }
 
-struct TopStories: Decodable {
+struct TopStories: Writeable {
     let section: String
     let lastUpdated: String
     let results: [Article]
@@ -24,7 +26,7 @@ struct TopStories: Decodable {
     }
 }
 
-struct Article: Decodable {
+struct Article: Writeable {
     let section: String
     let title: String
     let abstract: String
@@ -44,14 +46,13 @@ struct Article: Decodable {
     }
 }
 
-struct Multimedia: Decodable {
+struct Multimedia: Writeable {
     let url: String
     let format: String
     let height: Double
     let width: Double
     let caption: String
 }
-
 
 extension Article {
     func getArticleImageArticle(for imageFormat: ImageFormat) -> String {

@@ -9,12 +9,16 @@ import UIKit
 
 class NewsFeedView: UIView {
     
-    public lazy var searchBar: UISearchBar = {
-        let sb = UISearchBar()
-        sb.translatesAutoresizingMaskIntoConstraints = false
-        sb.autocapitalizationType = .none
-        sb.placeholder = "search for news article"
-        return sb
+    
+    public lazy var searchController: UISearchController = {
+        let sc = UISearchController()
+        sc.loadViewIfNeeded()
+        sc.obscuresBackgroundDuringPresentation = false
+        sc.searchBar.placeholder = "search articles"
+        sc.searchBar.scopeButtonTitles = ["technology", "finance", "country"]
+        sc.searchBar.enablesReturnKeyAutomatically = false
+        sc.searchBar.returnKeyType = UIReturnKeyType.default
+        return sc
     }()
     
     public lazy var collectionView: UICollectionView = {
@@ -38,23 +42,14 @@ class NewsFeedView: UIView {
     }
     
     private func commonInit() {
-        setSearchBarConstraints()
         setCollectionViewConstraints()
     }
     
-    private func setSearchBarConstraints() {
-        addSubview(searchBar)
-        NSLayoutConstraint.activate( [
-            searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-    }
     
     private func setCollectionViewConstraints() {
         addSubview(collectionView)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)

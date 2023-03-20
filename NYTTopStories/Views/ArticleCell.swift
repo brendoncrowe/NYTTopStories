@@ -114,7 +114,8 @@ class ArticleCell: UICollectionViewCell {
         addSubview(byLineLabel)
         NSLayoutConstraint.activate([
             byLineLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            byLineLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            byLineLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 280),
+            byLineLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
         ])
     }
 }

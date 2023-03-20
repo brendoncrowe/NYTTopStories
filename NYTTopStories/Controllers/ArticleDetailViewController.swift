@@ -6,47 +6,30 @@
 //
 
 import UIKit
+import ImageKit
 
 class ArticleDetailViewController: UIViewController {
     
-    private var mainView = ArticleDetailView()
-    
+    private let DetailView = ArticleDetailView()
     public var article: Article?
     
     override func loadView() {
-        view = mainView
+        view = DetailView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         updateUI()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(saveArticleButtonPressed))
     }
     
     private func updateUI() {
-        guard let article = article else {
-            fatalError("did not load article")
-        }
-        navigationItem.title = article.title
-        mainView.abstractHeadline.text = article.abstract
-        mainView.articleImageView.getImage(with: article.getArticleImageArticle(for: .superJumbo)) { [weak self] result in
-            switch result {
-            case .failure:
-                DispatchQueue.main.async {
-                    self?.mainView.articleImageView.image = UIImage(systemName: "photo.fill")
-                }
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.mainView.articleImageView.image = image
-                }
-            }
-        }
+        DetailView.configureView(for: article)
+        navigationItem.title = article?.title ?? "Article not available"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(saveArticleButtonPressed))
     }
     
-    
-    @objc func saveArticleButtonPressed(_ sender: UIBarButtonItem) {
+    @objc private func saveArticleButtonPressed(_ sender: UIBarButtonItem) {
         print("saved button pressed")
     }
-    
 }
