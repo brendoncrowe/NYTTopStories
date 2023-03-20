@@ -17,7 +17,6 @@ class SavedArticlesView: UIView {
         cv.backgroundColor = .systemGroupedBackground
         return cv
     }()
-    
 
     override init(frame: CGRect) {
         super.init(frame: frame)

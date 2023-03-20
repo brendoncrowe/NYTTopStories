@@ -12,10 +12,11 @@ class SavedArticlesViewController: UIViewController {
     
     public var dataPersistence: DataPersistence<Article>!
     private var savedArticlesView = SavedArticlesView()
-    private var articles = [Article]() {
+    
+    private var savedArticles = [Article]() {
         didSet {
             savedArticlesView.collectionView.reloadData()
-            if articles.isEmpty {
+            if savedArticles.isEmpty {
                 // setup empty view
                 savedArticlesView.collectionView.backgroundView = EmptyView()
             } else {
@@ -29,7 +30,7 @@ class SavedArticlesViewController: UIViewController {
         super.loadView()
         view = savedArticlesView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -46,7 +47,7 @@ class SavedArticlesViewController: UIViewController {
     
     private func fetchSavedArticles() {
         do {
-            articles = try dataPersistence.loadItems()
+            savedArticles = try dataPersistence.loadItems()
         } catch {
             print("error loading saved articles: \(error)")
         }
@@ -56,15 +57,16 @@ class SavedArticlesViewController: UIViewController {
 extension SavedArticlesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return articles.count
+        return savedArticles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = savedArticlesView.collectionView.dequeueReusableCell(withReuseIdentifier: "articleCell", for: indexPath) as? SavedArticleCell else {
             fatalError("could not dequeue a SavedArticleCell")
         }
-        let article = articles[indexPath.row]
-        cell.configureCell(for: article)
+        let savedArticle = savedArticles[indexPath.row]
+        cell.configureCell(for: savedArticle)
+        cell.delegate = self
         cell.backgroundColor = .systemBackground
         return cell
     }
@@ -97,6 +99,32 @@ extension SavedArticlesViewController: DataPersistenceDelegate {
     }
     
     func didDeleteItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-        print("Item deleted")
+        fetchSavedArticles()
+    }
+}
+
+extension SavedArticlesViewController: SavedArticleCellDelegate {
+    
+    func didLongPress(_ articleCell: SavedArticleCell, article: Article) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [weak self] alertAction in
+            self?.deleteArticle(article)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
+    private func deleteArticle(_ article: Article) {
+        guard let index = savedArticles.firstIndex(of: article) else {
+            return
+        }
+        do {
+            // deletes from documents directory
+            try dataPersistence.deleteItem(at: index)
+        } catch {
+            print("Error deleting article: \(article)")
+        }
     }
 }

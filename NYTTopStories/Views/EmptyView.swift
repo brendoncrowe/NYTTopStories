@@ -61,9 +61,7 @@ class EmptyView: UIView {
         
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: boxImageView.topAnchor, constant: -20),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            titleLabel.bottomAnchor.constraint(equalTo: boxImageView.topAnchor, constant: -20)
         ])
         
         NSLayoutConstraint.activate([
@@ -75,10 +73,7 @@ class EmptyView: UIView {
         
         NSLayoutConstraint.activate([
             messageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            messageLabel.topAnchor.constraint(equalTo: boxImageView.bottomAnchor, constant: 20),
-            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
-        
+            messageLabel.topAnchor.constraint(equalTo: boxImageView.bottomAnchor, constant: 20)
         ])
     }
 }

@@ -7,7 +7,22 @@
 
 import UIKit
 
+protocol SavedArticleCellDelegate: AnyObject {
+    func didLongPress(_ articleCell: SavedArticleCell, article: Article)
+}
+
 class SavedArticleCell: UICollectionViewCell {
+    
+    // keep track of current article
+    private var currentArticle: Article!
+    
+    weak var delegate: SavedArticleCellDelegate?
+    
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+      let gesture = UILongPressGestureRecognizer()
+      gesture.addTarget(self, action: #selector(longPressAction))
+      return gesture
+    }()
     
     private let articleImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero) // Making the x,y width and height 0. Layout will be setup later
@@ -23,7 +38,6 @@ class SavedArticleCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.clipsToBounds = true
-        label.textAlignment = .center
         label.numberOfLines = 3
         label.font = UIFont.preferredFont(forTextStyle: .callout)
         label.text = "Article"
@@ -33,6 +47,7 @@ class SavedArticleCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
+        contentView.addGestureRecognizer(longPressGesture)
     }
     
     required init?(coder: NSCoder) {
@@ -68,6 +83,7 @@ class SavedArticleCell: UICollectionViewCell {
     }
 
     public func configureCell(for article: Article) {
+        currentArticle = article // associating cell with its article
         articleImageView.getImage(with: article.getArticleImageArticle(for: .thumbLarge)) { [weak self] result in
             switch result {
             case .failure:
@@ -81,5 +97,15 @@ class SavedArticleCell: UICollectionViewCell {
             }
         }
         articleTitleLabel.text = article.title
+    }
+    
+    @objc
+    private func longPressAction(gesture: UILongPressGestureRecognizer) {
+      if gesture.state == .began { // if gesture is active
+        gesture.state = .cancelled
+        return
+      }
+        print(currentArticle.title)
+      delegate?.didLongPress(self, article: currentArticle)
     }
 }
