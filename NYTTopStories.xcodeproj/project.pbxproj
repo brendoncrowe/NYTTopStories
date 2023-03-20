@@ -149,8 +149,8 @@
 		404E6F1E29C6293500428FDC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				404E6F1F29C6295800428FDC /* NewsFeedView.swift */,
 				40A3F1ED29C7DB2100F944F5 /* ArticleDetailView.swift */,
+				404E6F1F29C6295800428FDC /* NewsFeedView.swift */,
 				403B717929C8C55100AE2413 /* SavedArticlesView.swift */,
 				403B717B29C8C73600AE2413 /* SavedArticleCell.swift */,
 				403B717D29C8D15300AE2413 /* EmptyView.swift */,

@@ -87,6 +87,11 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
         viewController.dataPersistence = dataPersistence
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+    }
+    
 }
 
 extension NewsFeedViewController: UISearchResultsUpdating {
@@ -97,14 +102,5 @@ extension NewsFeedViewController: UISearchResultsUpdating {
 
 extension NewsFeedViewController: UISearchBarDelegate {
     
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        newsFeedView.searchController.searchBar.showsScopeBar = true
-        return true
-    }
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        // used to hide the scope titles when the search bar is not in use 
-        newsFeedView.searchController.searchBar.showsScopeBar = false
-        return true
-    }
+
 }

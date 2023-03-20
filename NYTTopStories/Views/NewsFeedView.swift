@@ -15,8 +15,6 @@ class NewsFeedView: UIView {
         sc.loadViewIfNeeded()
         sc.obscuresBackgroundDuringPresentation = false
         sc.searchBar.placeholder = "search articles"
-        sc.searchBar.scopeButtonTitles = ["technology", "finance", "country"]
-        sc.searchBar.selectedScopeButtonIndex = 0
         sc.searchBar.enablesReturnKeyAutomatically = false
         sc.searchBar.returnKeyType = UIReturnKeyType.default
         return sc

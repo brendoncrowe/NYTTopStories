@@ -47,7 +47,6 @@ class SavedArticleCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
-        contentView.addGestureRecognizer(longPressGesture)
     }
     
     required init?(coder: NSCoder) {
@@ -58,6 +57,7 @@ class SavedArticleCell: UICollectionViewCell {
     private func commonInit() {
         setupLayoutConstraints()
         setArticleTitleLabelConstraints()
+        contentView.addGestureRecognizer(longPressGesture)
     }
     
     private func setupLayoutConstraints() {
@@ -105,7 +105,6 @@ class SavedArticleCell: UICollectionViewCell {
         gesture.state = .cancelled
         return
       }
-        print(currentArticle.title)
       delegate?.didLongPress(self, article: currentArticle)
     }
 }
