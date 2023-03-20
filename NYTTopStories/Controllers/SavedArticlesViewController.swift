@@ -14,7 +14,14 @@ class SavedArticlesViewController: UIViewController {
     private var savedArticlesView = SavedArticlesView()
     private var articles = [Article]() {
         didSet {
-            print("there are \(articles.count) articles")
+            savedArticlesView.collectionView.reloadData()
+            if articles.isEmpty {
+                // setup empty view
+                savedArticlesView.collectionView.backgroundView = EmptyView()
+            } else {
+                // remove empty view
+                savedArticlesView.collectionView.backgroundView = nil
+            }
         }
     }
     
