@@ -15,12 +15,17 @@ class TopStoriesTabController: UITabBarController {
     private lazy var newsFeedVC: NewsFeedViewController = {
         let viewController = NewsFeedViewController()
         viewController.tabBarItem = UITabBarItem(title: "News Feed", image: UIImage(systemName: "newspaper"), tag: 0)
+        viewController.dataPersistence = dataPersistence
         return viewController
     }()
     
     private lazy var savedArticlesVC: SavedArticlesViewController = {
         let viewController = SavedArticlesViewController()
         viewController.tabBarItem = UITabBarItem(title: "Saved Articles", image: UIImage(systemName: "folder"), tag: 1)
+        viewController.dataPersistence = dataPersistence
+        
+        // ***Set the DataPersistence delegate HERE***
+        viewController.dataPersistence.delegate = viewController
         return viewController
     }()
     

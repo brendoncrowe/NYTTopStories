@@ -7,7 +7,7 @@
 
 import Foundation
 
-private typealias Writeable = Codable & Equatable
+public typealias Writeable = Codable & Equatable
 
 enum ImageFormat: String {
     case superJumbo = "Super Jumbo"

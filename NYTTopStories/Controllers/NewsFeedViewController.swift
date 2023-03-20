@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import DataPersistence
 
 class NewsFeedViewController: UIViewController {
     
     private let newsFeedView = NewsFeedView()
+    public var dataPersistence: DataPersistence<Article>!
+    
     private var articles = [Article]() {
         didSet {
             DispatchQueue.main.async {
@@ -37,7 +40,6 @@ class NewsFeedViewController: UIViewController {
         navigationItem.searchController = newsFeedView.searchController
         navigationItem.searchController?.searchBar.delegate = self
         navigationItem.searchController?.searchResultsUpdater = self
-        navigationItem.searchController?.searchBar.selectedScopeButtonIndex = 0
     }
     
     private func fetchArticles(for section: String = "technology") {
@@ -82,6 +84,7 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
         let article = articles[indexPath.row]
         let viewController = ArticleDetailViewController()
         viewController.article = article
+        viewController.dataPersistence = dataPersistence
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -90,7 +93,6 @@ extension NewsFeedViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
     }
-    
 }
 
 extension NewsFeedViewController: UISearchBarDelegate {
@@ -101,8 +103,8 @@ extension NewsFeedViewController: UISearchBarDelegate {
     }
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        // used to hide the scope titles when the search bar is not in use 
         newsFeedView.searchController.searchBar.showsScopeBar = false
         return true
     }
-    
 }

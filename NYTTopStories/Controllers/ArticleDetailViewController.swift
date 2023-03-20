@@ -7,10 +7,12 @@
 
 import UIKit
 import ImageKit
+import DataPersistence
 
 class ArticleDetailViewController: UIViewController {
     
     private let DetailView = ArticleDetailView()
+    public var dataPersistence: DataPersistence<Article>!
     public var article: Article?
     
     override func loadView() {
@@ -21,15 +23,22 @@ class ArticleDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         updateUI()
+        
     }
-    
+
     private func updateUI() {
         DetailView.configureView(for: article)
         navigationItem.title = article?.title ?? "Article not available"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(saveArticleButtonPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(saveArticleButtonPressed(_:)))
     }
     
     @objc private func saveArticleButtonPressed(_ sender: UIBarButtonItem) {
-        print("saved button pressed")
+        guard let article = article else { return }
+        do {
+            // save to documents directory 
+            try dataPersistence.createItem(article)
+        } catch {
+            print("error saving article: \(error)")
+        }
     }
 }
