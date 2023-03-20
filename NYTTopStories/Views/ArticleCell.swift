@@ -64,16 +64,11 @@ class ArticleCell: UICollectionViewCell {
         setByLineLabelConstraints()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        articleImageView.layer.cornerRadius = 4
-    }
-    
     public func configCell(with article: Article) {
         articleTitle.text = article.title
         abstractHeadline.text = article.abstract
         byLineLabel.text = article.byline
-        articleImageView.getImage(with: article.multimedia.first!.url) { [weak self] result in
+        articleImageView.getImage(with: article.getArticleImageArticle(for: .thumbLarge)) { [weak self] result in
             switch result {
             case .failure:
                 DispatchQueue.main.async {

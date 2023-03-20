@@ -25,6 +25,7 @@ class NewsFeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        title = "News Articles"
         fetchArticles()
         configureVC()
     }
@@ -58,8 +59,8 @@ extension NewsFeedViewController: UICollectionViewDataSource {
             fatalError("could not dequeue an ArticleCell")
         }
         let article = articles[indexPath.row]
-        cell.backgroundColor = .systemBackground
         cell.configCell(with: article)
+        cell.backgroundColor = .systemBackground
         return cell
     }
 }
@@ -71,5 +72,12 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
         let itemWidth: CGFloat = maxSize.width
         let itemHeight: CGFloat = maxSize.height * 0.20
         return CGSize(width: itemWidth, height: itemHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let article = articles[indexPath.row]
+        let viewController = ArticleDetailViewController()
+        viewController.article = article
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

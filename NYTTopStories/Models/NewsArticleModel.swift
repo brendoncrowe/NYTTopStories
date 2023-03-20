@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum ImageFormat: String {
+    case superJumbo = "Super Jumbo"
+    case thumbLarge = "Large Thumbnail"
+}
+
 struct TopStories: Decodable {
     let section: String
     let lastUpdated: String
@@ -47,3 +52,14 @@ struct Multimedia: Decodable {
     let caption: String
 }
 
+
+extension Article {
+    func getArticleImageArticle(for imageFormat: ImageFormat) -> String {
+        let results = multimedia.filter { $0.format == imageFormat.rawValue }
+        guard let multimediaImage = results.first else {
+            // result is 0
+            return ""
+        }
+        return multimediaImage.url
+    }
+}
