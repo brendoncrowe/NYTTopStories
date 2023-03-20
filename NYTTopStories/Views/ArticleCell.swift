@@ -45,7 +45,6 @@ class ArticleCell: UICollectionViewCell {
         return label
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()

@@ -12,10 +12,9 @@ class SavedArticlesView: UIView {
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: 100, height: 100)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .systemRed
+        cv.backgroundColor = .systemGroupedBackground
         return cv
     }()
     
@@ -33,8 +32,6 @@ class SavedArticlesView: UIView {
     private func commonInit() {
         setCollectionViewLayoutConstraints()
     }
-    
-    
     
     private func setCollectionViewLayoutConstraints() {
         addSubview(collectionView)
