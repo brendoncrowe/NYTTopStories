@@ -18,7 +18,7 @@ class ArticleDetailView: UIView {
         return imageView
     }()
     
-    public lazy var abstractHeadline: UILabel = {
+    private lazy var abstractHeadline: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -27,7 +27,7 @@ class ArticleDetailView: UIView {
         return label
     }()
     
-    public lazy var byLineLabel: UILabel = {
+    private lazy var byLineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
@@ -36,7 +36,7 @@ class ArticleDetailView: UIView {
         return label
     }()
     
-    public lazy var dateLabel: UILabel = {
+    private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1

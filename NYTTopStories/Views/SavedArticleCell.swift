@@ -24,7 +24,7 @@ class SavedArticleCell: UICollectionViewCell {
       return gesture
     }()
     
-    private let articleImageView: UIImageView = {
+    private lazy var articleImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero) // Making the x,y width and height 0. Layout will be setup later
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
@@ -34,7 +34,7 @@ class SavedArticleCell: UICollectionViewCell {
     }()
     
     // label for user name
-    private let articleTitleLabel: UILabel = {
+    private lazy var articleTitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.clipsToBounds = true
@@ -57,7 +57,7 @@ class SavedArticleCell: UICollectionViewCell {
     private func commonInit() {
         setupLayoutConstraints()
         setArticleTitleLabelConstraints()
-        contentView.addGestureRecognizer(longPressGesture)
+        addGestureRecognizer(longPressGesture)
     }
     
     private func setupLayoutConstraints() {
@@ -101,7 +101,7 @@ class SavedArticleCell: UICollectionViewCell {
     
     @objc
     private func longPressAction(gesture: UILongPressGestureRecognizer) {
-      if gesture.state == .began { // if gesture is active
+        if gesture.state == .began || gesture.state == .changed { // if gesture is active
         gesture.state = .cancelled
         return
       }

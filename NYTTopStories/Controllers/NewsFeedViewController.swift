@@ -68,8 +68,7 @@ class NewsFeedViewController: UIViewController {
         }
     }
     
-    
-    private func fetchArticles(for section: String = "technology") {
+    private func fetchArticles(for section: String = "Arts") {
         
         // get section from user defaults
         if let sectionName = UserDefaults.standard.object(forKey: UserKey.sectionName) as? String {

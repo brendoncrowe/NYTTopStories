@@ -10,7 +10,7 @@ import ImageKit
 
 class ArticleCell: UICollectionViewCell {
     
-    public lazy var articleImageView: UIImageView = {
+    private lazy var articleImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -18,7 +18,7 @@ class ArticleCell: UICollectionViewCell {
         return imageView
     }()
     
-    public lazy var articleTitle: UILabel = {
+    private lazy var articleTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
@@ -27,7 +27,7 @@ class ArticleCell: UICollectionViewCell {
         return label
     }()
     
-    public lazy var abstractHeadline: UILabel = {
+    private lazy var abstractHeadline: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 3
@@ -36,7 +36,7 @@ class ArticleCell: UICollectionViewCell {
         return label
     }()
     
-    public lazy var byLineLabel: UILabel = {
+    private lazy var byLineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1

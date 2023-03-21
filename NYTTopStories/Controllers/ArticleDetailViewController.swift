@@ -23,7 +23,6 @@ class ArticleDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         updateUI()
-        
     }
 
     private func updateUI() {

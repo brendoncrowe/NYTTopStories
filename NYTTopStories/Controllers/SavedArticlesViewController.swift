@@ -90,6 +90,14 @@ extension SavedArticlesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailController = ArticleDetailViewController()
+        let savedArticle = savedArticles[indexPath.row]
+        detailController.article = savedArticle
+        detailController.dataPersistence = dataPersistence
+        navigationController?.pushViewController(detailController, animated: true)
+    }
 }
 
 extension SavedArticlesViewController: DataPersistenceDelegate {

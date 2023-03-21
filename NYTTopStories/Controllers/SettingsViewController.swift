@@ -16,6 +16,8 @@ class SettingsViewController: UIViewController {
     private let settingsView = SettingsView()
     private let sections = ["Arts", "Automobiles", "Books", "Business", "Fashion", "Food", "Health", "Insider", "Magazine", "Movies", "NYRegion", "Opinion", "Politics", "RealEstate", "Science", "Sports", "SundayReview", "Technology", "Theater", "Travel", "Upshot", "US", "World"]
     
+    private var sectionName = UserDefaults.standard.object(forKey: UserKey.sectionName) as? String ?? "Technology"
+    
     override func loadView() {
         super.loadView()
         view = settingsView
@@ -25,6 +27,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         settingsView.pickerView.delegate = self
         settingsView.pickerView.dataSource = self
+        settingsView.pickerView.selectRow(sections.firstIndex(of: sectionName)!, inComponent: 0, animated: true)
         view.backgroundColor = .systemGroupedBackground
     }
 }
