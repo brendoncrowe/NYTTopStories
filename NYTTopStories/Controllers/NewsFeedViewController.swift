@@ -12,7 +12,6 @@ class NewsFeedViewController: UIViewController {
     
     private let newsFeedView = NewsFeedView()
     public var dataPersistence: DataPersistence<Article>!
-    private var searchThroughArticles = [Article]()
     private var articles = [Article]() {
         didSet {
             DispatchQueue.main.async {
@@ -144,10 +143,13 @@ extension NewsFeedViewController: UISearchResultsUpdating {
             return
         }
         articles = articles.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+        newsFeedView.collectionView.reloadData()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        newsFeedView.searchController.searchBar.resignFirstResponder()
+        if newsFeedView.searchController.searchBar.isFirstResponder {
+            newsFeedView.searchController.searchBar.resignFirstResponder()
+        }
     }
 }
 
