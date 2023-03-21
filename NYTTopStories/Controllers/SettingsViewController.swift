@@ -7,10 +7,14 @@
 
 import UIKit
 
+struct UserKey {
+    static let sectionName = "News Section"
+}
+
 class SettingsViewController: UIViewController {
     
     private let settingsView = SettingsView()
-    private let sections = ["Arts", "Automobiles", "Books", "Business", "Fashion", "Food", "Health", "Insider", "Magazine", "Movies", "NYRegion", "Obituaries", "Opinion", "Politics", "RealeEstate", "Science", "Sports", "SundayReview", "Technology", "Theater", "T-Magazine", "Travel", "Upshot", "US", "World"]
+    private let sections = ["Arts", "Automobiles", "Books", "Business", "Fashion", "Food", "Health", "Insider", "Magazine", "Movies", "NYRegion", "Opinion", "Politics", "RealEstate", "Science", "Sports", "SundayReview", "Technology", "Theater", "Travel", "Upshot", "US", "World"]
     
     override func loadView() {
         super.loadView()
@@ -34,7 +38,6 @@ extension SettingsViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return sections.count
     }
-    
 }
 
 extension SettingsViewController: UIPickerViewDelegate {
@@ -43,4 +46,9 @@ extension SettingsViewController: UIPickerViewDelegate {
         return sections[row] // access each individual string via the index [2]
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        // store the current selected news section in user defaults
+        let sectionName = sections[row]
+        UserDefaults.standard.set(sectionName, forKey: UserKey.sectionName)
+    }
 }

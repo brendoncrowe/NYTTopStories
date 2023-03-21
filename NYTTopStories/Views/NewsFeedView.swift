@@ -9,7 +9,6 @@ import UIKit
 
 class NewsFeedView: UIView {
     
-    
     public lazy var searchController: UISearchController = {
         let sc = UISearchController()
         sc.loadViewIfNeeded()

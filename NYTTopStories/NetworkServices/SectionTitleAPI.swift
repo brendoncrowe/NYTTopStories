@@ -1,17 +1,17 @@
 //
-//  NYTTopStoriesAPIClient.swift
+//  SectionTitleAPI.swift
 //  NYTTopStories
 //
-//  Created by Brendon Crowe on 3/18/23.
+//  Created by Brendon Crowe on 3/21/23.
 //
 
 import Foundation
 import NetworkHelper
 
 
-struct NYYTopStoriesAPIClient {
+struct SectionTitleAPI {
     
-     static func fetchItems(for section: String, completion: @escaping (Result<[Article], AppError>) -> ()) {
+     static func fetchItems(for section: String, completion: @escaping (Result<String, AppError>) -> ()) {
         let endpoint = "https://api.nytimes.com/svc/topstories/v2/\(section).json?api-key=\(AppKeys.apiKey)"
         guard let url = URL(string: endpoint) else {
             completion(.failure(.badURL(endpoint)))
@@ -25,8 +25,8 @@ struct NYYTopStoriesAPIClient {
             case .success(let data):
                 do {
                     let searchResults = try JSONDecoder().decode(TopStories.self, from: data)
-                    let articles = searchResults.results
-                    completion(.success(articles))
+                    let sectionTitle = searchResults.section
+                    completion(.success(sectionTitle))
                 } catch {
                     completion(.failure(.decodingError(error)))
                 }

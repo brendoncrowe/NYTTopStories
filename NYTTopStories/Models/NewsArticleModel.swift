@@ -33,7 +33,7 @@ struct Article: Writeable {
     let url: String
     let publishedDate: String
     let byline: String
-    let multimedia: [Multimedia]
+    let multimedia: [Multimedia]?
     
     private enum CodingKeys: String, CodingKey {
         case section
@@ -56,6 +56,7 @@ struct Multimedia: Writeable {
 
 extension Article {
     func getArticleImageArticle(for imageFormat: ImageFormat) -> String {
+        guard let multimedia = multimedia else { return "" }
         let results = multimedia.filter { $0.format == imageFormat.rawValue }
         guard let multimediaImage = results.first else {
             // result is 0

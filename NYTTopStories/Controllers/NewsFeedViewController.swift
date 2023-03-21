@@ -21,6 +21,12 @@ class NewsFeedViewController: UIViewController {
         }
     }
     
+    private var sectionName = "Technology" {
+        didSet {
+            getSectionTitle()
+        }
+    }
+    
     override func loadView() {
         view = newsFeedView
     }
@@ -28,9 +34,12 @@ class NewsFeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "News Articles"
-        fetchArticles()
         configureVC()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        fetchArticles()
     }
     
     private func configureVC() {
@@ -40,9 +49,44 @@ class NewsFeedViewController: UIViewController {
         navigationItem.searchController = newsFeedView.searchController
         navigationItem.searchController?.searchBar.delegate = self
         navigationItem.searchController?.searchResultsUpdater = self
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    private func getSectionTitle() {
+        SectionTitleAPI.fetchItems(for: sectionName) { result in
+            switch result {
+            case .failure(let appError):
+                DispatchQueue.main.async {
+                    self.navigationItem.title = "Technology " + "news articles"
+                }
+                print("Error getting section title: \(appError)")
+            case .success(let sectionTitle):
+                DispatchQueue.main.async {
+                    self.navigationItem.title = "\(sectionTitle) news articles"
+                }
+            }
+        }
+    }
+    
+    
     private func fetchArticles(for section: String = "technology") {
+        
+        // get section from user defaults
+        if let sectionName = UserDefaults.standard.object(forKey: UserKey.sectionName) as? String {
+            if sectionName != self.sectionName {
+                // at this point the section will be different
+                // make a new query
+                queryAPI(for: sectionName)
+                self.sectionName = sectionName
+            }
+        } else {
+            // use default section name
+            queryAPI(for: sectionName)
+            navigationItem.title = sectionName + " news articles"
+        }
+    }
+    
+    private func queryAPI(for section: String) {
         NYYTopStoriesAPIClient.fetchItems(for: section) { [weak self] result in
             switch result {
             case .failure(let appError):
@@ -102,5 +146,5 @@ extension NewsFeedViewController: UISearchResultsUpdating {
 
 extension NewsFeedViewController: UISearchBarDelegate {
     
-
+    
 }
