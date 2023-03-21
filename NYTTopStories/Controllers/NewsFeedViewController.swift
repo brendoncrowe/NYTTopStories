@@ -125,10 +125,8 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let article = articles[indexPath.row]
-        let viewController = ArticleDetailViewController()
-        viewController.article = article
-        viewController.dataPersistence = dataPersistence
-        navigationController?.pushViewController(viewController, animated: true)
+        let detailController = ArticleDetailViewController(dataPersistence, article: article)
+        navigationController?.pushViewController(detailController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

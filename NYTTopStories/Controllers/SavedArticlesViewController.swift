@@ -92,10 +92,8 @@ extension SavedArticlesViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailController = ArticleDetailViewController()
         let savedArticle = savedArticles[indexPath.row]
-        detailController.article = savedArticle
-        detailController.dataPersistence = dataPersistence
+        let detailController = ArticleDetailViewController(dataPersistence, article: savedArticle)
         navigationController?.pushViewController(detailController, animated: true)
     }
 }

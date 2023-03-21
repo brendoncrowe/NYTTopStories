@@ -44,6 +44,11 @@ struct Article: Writeable {
         case byline
         case multimedia
     }
+    
+    static func == (lhs: Article, rhs: Article) -> Bool {
+        return lhs.abstract == rhs.abstract && lhs.title == rhs.title
+    }
+    
 }
 
 struct Multimedia: Writeable {
