@@ -12,7 +12,7 @@ class NewsFeedViewController: UIViewController {
     
     private let newsFeedView = NewsFeedView()
     public var dataPersistence: DataPersistence<Article>!
-    
+    private var searchThroughArticles = [Article]()
     private var articles = [Article]() {
         didSet {
             DispatchQueue.main.async {
@@ -47,7 +47,6 @@ class NewsFeedViewController: UIViewController {
         newsFeedView.collectionView.delegate = self
         newsFeedView.collectionView.register(ArticleCell.self, forCellWithReuseIdentifier: "articleCell")
         navigationItem.searchController = newsFeedView.searchController
-        navigationItem.searchController?.searchBar.delegate = self
         navigationItem.searchController?.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -77,6 +76,9 @@ class NewsFeedViewController: UIViewController {
                 // make a new query
                 queryAPI(for: sectionName)
                 self.sectionName = sectionName
+            } else {
+                queryAPI(for: sectionName)
+                navigationItem.title = sectionName + " news articles"
             }
         } else {
             // use default section name
@@ -137,11 +139,16 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
 
 extension NewsFeedViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
+            fetchArticles()
+            return
+        }
+        articles = articles.filter { $0.title.lowercased().contains(searchText.lowercased()) }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        newsFeedView.searchController.searchBar.resignFirstResponder()
     }
 }
 
-extension NewsFeedViewController: UISearchBarDelegate {
-    
-    
-}
+
