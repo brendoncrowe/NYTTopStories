@@ -11,10 +11,16 @@ import DataPersistence
 
 class ArticleDetailViewController: UIViewController {
     
-    private let DetailView = ArticleDetailView()
+    private let detailView = ArticleDetailView()
     private var dataPersistence: DataPersistence<Article>
     private var article: Article
     private var bookmarkBarButton: UIBarButtonItem!
+    
+    private lazy var tapGesture: UITapGestureRecognizer! = {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(didTap(_:)))
+        return gesture
+    }()
     
     init(_ dataPersistence: DataPersistence<Article>, article: Article) {
         self.dataPersistence = dataPersistence
@@ -27,13 +33,17 @@ class ArticleDetailViewController: UIViewController {
     }
     
     override func loadView() {
-        view = DetailView
+        view = detailView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         updateUI()
+        
+        // setup gesture 
+        detailView.articleImageView.isUserInteractionEnabled = true
+        detailView.articleImageView.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,8 +51,20 @@ class ArticleDetailViewController: UIViewController {
         updateBookmarkState(article)
     }
     
+    @objc private func didTap(_ gesture: UITapGestureRecognizer) {
+        let image = detailView.articleImageView.image ?? UIImage()
+        // get instance of ZoomImageViewController from storyboard
+        let storyboard = UIStoryboard(name: "ZoomImage", bundle: nil)
+        let zoomImageController = storyboard.instantiateViewController(identifier: "ZoomImageViewController") { coder in
+            return ZoomImageViewController(coder: coder, image: image)
+        }
+        present(zoomImageController, animated: true)
+    }
+    
+    
+    
     private func updateUI() {
-        DetailView.configureView(for: article)
+        detailView.configureView(for: article)
         navigationItem.title = article.title
         bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(saveArticleButtonPressed(_:)))
         navigationItem.rightBarButtonItem = bookmarkBarButton
