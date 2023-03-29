@@ -11,26 +11,22 @@ import DataPersistence
 class TopStoriesTabController: UITabBarController {
     
     private var dataPersistence = DataPersistence<Article>(filename: "savedArticles.plist")
+    private var userPreference = UserPreference()
     
     private lazy var newsFeedVC: NewsFeedViewController = {
-        let viewController = NewsFeedViewController()
+        let viewController = NewsFeedViewController(dataPersistence, userPreference: userPreference)
         viewController.tabBarItem = UITabBarItem(title: "News Feed", image: UIImage(systemName: "newspaper"), tag: 0)
-        viewController.dataPersistence = dataPersistence
         return viewController
     }()
     
     private lazy var savedArticlesVC: SavedArticlesViewController = {
-        let viewController = SavedArticlesViewController()
+        let viewController = SavedArticlesViewController(dataPersistence)
         viewController.tabBarItem = UITabBarItem(title: "Saved Articles", image: UIImage(systemName: "folder"), tag: 1)
-        viewController.dataPersistence = dataPersistence
-        
-        // ***Set the DataPersistence delegate HERE***
-        viewController.dataPersistence.delegate = viewController
         return viewController
     }()
     
     private lazy var settingsVC: SettingsViewController = {
-        let viewController = SettingsViewController()
+        let viewController = SettingsViewController(userPreference)
         viewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 2)
         return viewController
     }()

@@ -11,7 +11,9 @@ import DataPersistence
 class NewsFeedViewController: UIViewController {
     
     private let newsFeedView = NewsFeedView()
-    public var dataPersistence: DataPersistence<Article>!
+    private var dataPersistence: DataPersistence<Article>
+    private var userPreference: UserPreference
+    
     private var articles = [Article]() {
         didSet {
             DispatchQueue.main.async {
@@ -19,11 +21,19 @@ class NewsFeedViewController: UIViewController {
             }
         }
     }
+    private var masterArticleList = [Article]()
+
     
-    private var sectionName = "Technology" {
-        didSet {
-            getSectionTitle()
-        }
+    // initializers
+    init(_ dataPersistence: DataPersistence<Article>, userPreference: UserPreference) {
+        self.dataPersistence = dataPersistence
+        self.userPreference = userPreference
+        super.init(nibName: nil, bundle: nil)
+        self.userPreference.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -34,11 +44,9 @@ class NewsFeedViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureVC()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        fetchArticles()
+        let sectionName = userPreference.getSectionName() ?? "Technology"
+        fetchArticles(sectionName)
+        getSectionTitle(sectionName)
     }
     
     private func configureVC() {
@@ -50,7 +58,7 @@ class NewsFeedViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-    private func getSectionTitle() {
+    private func getSectionTitle(_ sectionName: String) {
         SectionTitleAPI.fetchItems(for: sectionName) { result in
             switch result {
             case .failure(let appError):
@@ -66,33 +74,14 @@ class NewsFeedViewController: UIViewController {
         }
     }
     
-    private func fetchArticles(for section: String = "Arts") {
-        
-        // get section from user defaults
-        if let sectionName = UserDefaults.standard.object(forKey: UserKey.sectionName) as? String {
-            if sectionName != self.sectionName {
-                // at this point the section will be different
-                // make a new query
-                queryAPI(for: sectionName)
-                self.sectionName = sectionName
-            } else {
-                queryAPI(for: sectionName)
-                navigationItem.title = sectionName + " news articles"
-            }
-        } else {
-            // use default section name
-            queryAPI(for: sectionName)
-            navigationItem.title = sectionName + " news articles"
-        }
-    }
-    
-    private func queryAPI(for section: String) {
+    private func fetchArticles(_ section: String) {
         NYYTopStoriesAPIClient.fetchItems(for: section) { [weak self] result in
             switch result {
             case .failure(let appError):
                 print("error getting article \(appError)")
             case .success(let articles):
                 self?.articles = articles
+                self?.masterArticleList = articles
             }
         }
     }
@@ -133,17 +122,16 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
-    
 }
 
 extension NewsFeedViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
-            fetchArticles()
+            let sectionName = userPreference.getSectionName() ?? "Technology"
+            fetchArticles(sectionName)
             return
         }
-        articles = articles.filter { $0.title.lowercased().contains(searchText.lowercased()) }
-        newsFeedView.collectionView.reloadData()
+        articles = masterArticleList.filter { $0.title.lowercased().contains(searchText.lowercased()) }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -153,4 +141,10 @@ extension NewsFeedViewController: UISearchResultsUpdating {
     }
 }
 
+extension NewsFeedViewController: UserPreferenceDelegate {
+    func didChangeNewsSection(_ userPreference: UserPreference, sectionName: String) {
+        getSectionTitle(sectionName)
+        fetchArticles(sectionName)
+    }
+}
 

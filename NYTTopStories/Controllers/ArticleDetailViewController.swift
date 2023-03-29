@@ -12,8 +12,8 @@ import DataPersistence
 class ArticleDetailViewController: UIViewController {
     
     private let DetailView = ArticleDetailView()
-    public var dataPersistence: DataPersistence<Article>!
-    public var article: Article
+    private var dataPersistence: DataPersistence<Article>
+    private var article: Article
     private var bookmarkBarButton: UIBarButtonItem!
     
     init(_ dataPersistence: DataPersistence<Article>, article: Article) {
@@ -68,7 +68,6 @@ class ArticleDetailViewController: UIViewController {
         updateBookmarkState(article)
     }
     
-    // ADDITION
     private func updateBookmarkState(_ article: Article) {
         if dataPersistence.hasItemBeenSaved(article) {
             bookmarkBarButton.image = UIImage(systemName: "bookmark.fill")

@@ -10,7 +10,7 @@ import DataPersistence
 
 class SavedArticlesViewController: UIViewController {
     
-    public var dataPersistence: DataPersistence<Article>!
+    private var dataPersistence: DataPersistence<Article>
     private var savedArticlesView = SavedArticlesView()
     
     private var savedArticles = [Article]() {
@@ -24,6 +24,16 @@ class SavedArticlesViewController: UIViewController {
                 savedArticlesView.collectionView.backgroundView = nil
             }
         }
+    }
+    
+    init(_ dataPersistence: DataPersistence<Article>) {
+        self.dataPersistence = dataPersistence
+        super.init(nibName: nil, bundle: nil)
+        self.dataPersistence.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
