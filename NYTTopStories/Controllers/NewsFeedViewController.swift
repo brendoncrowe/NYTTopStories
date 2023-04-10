@@ -18,6 +18,7 @@ class NewsFeedViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.newsFeedView.collectionView.reloadData()
+                self.title = self.userPreference.getSectionName()
             }
         }
     }
@@ -46,7 +47,6 @@ class NewsFeedViewController: UIViewController {
         configureVC()
         let sectionName = userPreference.getSectionName() ?? "Technology"
         fetchArticles(sectionName)
-        getSectionTitle(sectionName)
     }
     
     private func configureVC() {
@@ -56,22 +56,6 @@ class NewsFeedViewController: UIViewController {
         navigationItem.searchController = newsFeedView.searchController
         navigationItem.searchController?.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
-    }
-    
-    private func getSectionTitle(_ sectionName: String) {
-        SectionTitleAPI.fetchItems(for: sectionName) { result in
-            switch result {
-            case .failure(let appError):
-                DispatchQueue.main.async {
-                    self.navigationItem.title = "Technology " + "news articles"
-                }
-                print("Error getting section title: \(appError)")
-            case .success(let sectionTitle):
-                DispatchQueue.main.async {
-                    self.navigationItem.title = "\(sectionTitle) news articles"
-                }
-            }
-        }
     }
     
     private func fetchArticles(_ section: String) {
@@ -143,7 +127,6 @@ extension NewsFeedViewController: UISearchResultsUpdating {
 
 extension NewsFeedViewController: UserPreferenceDelegate {
     func didChangeNewsSection(_ userPreference: UserPreference, sectionName: String) {
-        getSectionTitle(sectionName)
         fetchArticles(sectionName)
     }
 }
